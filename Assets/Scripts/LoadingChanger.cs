@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public class LoadingChanger : MonoBehaviour
 {
-    public GameObject LoadingScreen;
     public string nextScene;
     public TMP_Text loadingText;
     private InputAction _nextScene;
@@ -18,7 +17,6 @@ public class LoadingChanger : MonoBehaviour
     void Start()
     {
         _nextScene = InputSystem.actions.FindAction("Jump");
-        Debug.Log(_nextScene);
         LoadButton();
     }
 
@@ -37,9 +35,10 @@ public class LoadingChanger : MonoBehaviour
             float progressValue = operation.progress / 0.9f *100f;
             yield return new WaitForSeconds(1);
             loadingText.text = progressValue.ToString() + "%";
-            Debug.Log(progressValue);
         }
-        Debug.Log("LoadingScene");
+
+        loadingText.text = (operation.progress / 0.9f *100f).ToString() + "%";
+
         yield return new WaitUntil(() => _nextScene.WasPressedThisFrame());
         operation.allowSceneActivation = true;
     }
